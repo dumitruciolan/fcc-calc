@@ -21,18 +21,33 @@ const data = [
   { id: "equals", value: "=" },
   { id: "decimal", value: "." }
 ];
+
 // button component
 const Button = ({ id, handleClick, value }) => (
   <button className="button" id={id} onClick={() => handleClick(value)}>
     {value}
   </button>
 );
+
+const History = ({ data, clearHistory }) => (
+  <div>
+    <div id="history">{data}</div>
+    {/* clear history button */}
+    <button
+      className="btn btn-outline-danger"
+      onClick={clearHistory}
+    >
+      Clear History
+    </button>
+  </div>
+)
+
 // main component
 class CalcV11 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      history: "",
+      history: [],
       currentNumber: "0",
       hasOperator: false, // to check for multiple operators
       hasDecimal: false, // to check for multiple decimal points
@@ -160,14 +175,11 @@ class CalcV11 extends React.Component {
         {/* history pane */}
         <span>
           <p>Thanks for using me! Your past results:</p>
-          <div id="history">{this.state.history}</div>
-          {/* clear history button */}
-          <button
-            className="btn btn-outline-danger"
-            onClick={() => this.setState({ history: "" })}
-          >
-            Clear History
-          </button>
+          <History
+            data={this.state.history}
+            clearHistory={() => this.setState({ history: "" })}
+          />
+          
         </span>
       </div>
     );
