@@ -24,7 +24,6 @@ const operators = ['+', '-', '/', '*']
 export const actionDenied = (display, button) => {
   const lastChar = display.slice(display.length-1)
 
-
   console.log('lastChar', lastChar);
   console.log('button', button);
   // lastChar & button in operators array return true
@@ -32,6 +31,10 @@ export const actionDenied = (display, button) => {
     operators.indexOf(lastChar) > -1 &&
     operators.indexOf(button) > -1
   ) return true
+
+  if (display === '0' && operators.indexOf(button) > -1) return true
+
+  if (display === '0' && button === '=') return true
 
   return false
 }

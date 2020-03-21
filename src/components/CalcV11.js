@@ -43,6 +43,7 @@ const CalcV11 = () => {
 
       return
     }
+
     // if display === 0 then overwrite
     if(display === '0'){
       setDisplay(button)
@@ -51,7 +52,9 @@ const CalcV11 = () => {
     }
 
     if(button === "="){
-      history.push(display)
+      const result = eval(display)
+
+      history.push(display + ' = ' + result)
       setHistory(history)
       setDisplay('0')
 
