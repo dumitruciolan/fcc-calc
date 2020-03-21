@@ -6,7 +6,7 @@ import CalcV1 from './components/CalcV1'
 import CalcV11 from './components/CalcV11'
 
 function App() {
-  const [version, setVersion] = useState('v1');
+  const [version, setVersion] = useState('v1.1');
   
   return (
     <div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import '../App.scss';
 
 // buttons and operators details
@@ -31,7 +32,13 @@ const Button = ({ id, handleClick, value }) => (
 
 const History = ({ data, clearHistory }) => (
   <div>
-    <div id="history">{data}</div>
+    <div id="history">
+      {data && data.map(calculation => (
+        <>
+          {calculation}<br />
+        </>
+      ))}
+    </div>
     {/* clear history button */}
     <button
       className="btn btn-outline-danger"
@@ -42,8 +49,44 @@ const History = ({ data, clearHistory }) => (
   </div>
 )
 
+const CalcV11 = () => {
+  const [display, setDisplay] = useState('v1.1');
+  const [history, setHistory] = useState([]);
+
+  const handleClick = button => {
+    setDisplay(display + button)
+  }
+  
+  return(
+    <div id="container">
+      <h3>v1.1</h3>
+      <span>
+        <div id="calculator">
+          {/* screen display component */}
+          <div id="display">{display}</div>
+          {/* buttons mapping from data array */}
+          {data.map(d => (
+            <Button
+              id={d.id}
+              value={d.value}
+              handleClick={handleClick}
+            />
+          ))}
+        </div>
+      </span>
+      {/* history pane */}
+      <span>
+        <p>Thanks for using me! Your past results:</p>
+        <History
+          data={history}
+          clearHistory={() => setHistory()}
+        />
+      </span>
+    </div>
+  )
+}
 // main component
-class CalcV11 extends React.Component {
+class CalcV111 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,45 +98,54 @@ class CalcV11 extends React.Component {
     };
   }
 
-  handleClick = buttonName => {
+  //
+  isDigit = ( button ) => {
+    if(
+      button ===  "0" ||
+      button === "1" ||
+      button === "2" ||
+      button === "3" ||
+      button === "4" ||
+      button === "5" ||
+      button === "6" ||
+      button === "7" ||
+      button === "8" ||
+      button === "9"
+    ) return true;
+
+    return false;
+  }
+
+  handleClick = button => {
     let { currentNumber, hasOperator, isNegative, history } = this.state;
 
     switch (true) {
       //handle the numbers
-      case buttonName === "0" ||
-        buttonName === "1" ||
-        buttonName === "2" ||
-        buttonName === "3" ||
-        buttonName === "4" ||
-        buttonName === "5" ||
-        buttonName === "6" ||
-        buttonName === "7" ||
-        buttonName === "8" ||
-        buttonName === "9":
+      case this.isDigit(button):
         // replace the zero if another number is typed
         if (this.state.currentNumber !== "0") {
-          currentNumber += buttonName;
+          currentNumber += button;
           // adding multiple operators
           hasOperator = false;
         } else {
-          currentNumber = buttonName;
+          currentNumber = button;
         }
         break;
       // handle the operators
-      case buttonName === "+" ||
-        buttonName === "-" ||
-        buttonName === "*" ||
-        buttonName === "/":
+      case button === "+" ||
+        button === "-" ||
+        button === "*" ||
+        button === "/":
         // check if an operator is already at the end
         if (!hasOperator) {
-          currentNumber += buttonName;
+          currentNumber += button;
           hasOperator = true;
           this.setState({ hasDecimal: false });
         } else {
           // handling the multiple operators
           let lastNumber = currentNumber.slice(currentNumber.length - 1);
           if (
-            buttonName === "-" &&
+            button === "-" &&
             !isNegative &&
             lastNumber !== "-" &&
             lastNumber !==
@@ -117,35 +169,35 @@ class CalcV11 extends React.Component {
                 currentNumber.length - 4
               )
           ) {
-            currentNumber += buttonName;
+            currentNumber += button;
             isNegative = true;
           } else {
             const newNumber = currentNumber.slice(0, currentNumber.length - 1);
             currentNumber = newNumber;
-            currentNumber += buttonName;
+            currentNumber += button;
             isNegative = false;
           }
         }
         break;
       // handle clear button
-      case buttonName === "C":
+      case button === "C":
         currentNumber = "0";
         hasOperator = false;
         this.setState({ hasDecimal: false });
         break;
       // handle equals button (evaluates the stored string)
-      case buttonName === "=":
+      case button === "=":
         let calculation = currentNumber;
         currentNumber = eval(currentNumber);
         hasOperator = false;
         // avoid duplicates and append the elements to history
         if (currentNumber !== calculation) {
-          history += `${calculation} = ${currentNumber} ${"\n"}`;
+          history.push([`${calculation} = ${currentNumber}`]);
         }
         this.setState({ hasDecimal: true });
         break;
       //handle decimal button
-      case buttonName === ".":
+      case button === ".":
         if (!this.state.hasDecimal) {
           currentNumber += ".";
           this.setState({ hasDecimal: true });
@@ -179,7 +231,6 @@ class CalcV11 extends React.Component {
             data={this.state.history}
             clearHistory={() => this.setState({ history: "" })}
           />
-          
         </span>
       </div>
     );
