@@ -54,9 +54,25 @@ const CalcV11 = () => {
   const [history, setHistory] = useState([]);
 
   const handleClick = button => {
+    console.log(button)
+
+    // reset display
+    if(button === "C") {
+      setDisplay("0")
+
+      return
+    }
+
+    // if display === 0 then overwrite
+    if(display === "0"){
+      setDisplay(button)
+
+      return
+    }
+
     setDisplay(display + button)
   }
-  
+
   return(
     <div id="container">
       <h3>v1.1</h3>
