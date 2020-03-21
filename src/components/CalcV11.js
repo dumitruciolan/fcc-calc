@@ -52,7 +52,15 @@ const History = ({ data, clearHistory }) => (
 const CalcV11 = () => {
   const [display, setDisplay] = useState('v1.1');
   const [history, setHistory] = useState([]);
+  const [hasError, setError] = useState(false);
 
+  const triggerError = () => {
+    setError(true)
+
+    setTimeout(() => {
+      setError(false)
+    }, 500)
+  }
   const handleClick = button => {
     console.log(button)
 
@@ -70,6 +78,12 @@ const CalcV11 = () => {
       return
     }
 
+    if(button === "4"){
+      triggerError()
+
+      return
+    }
+
     setDisplay(display + button)
   }
 
@@ -79,7 +93,8 @@ const CalcV11 = () => {
       <span>
         <div id="calculator">
           {/* screen display component */}
-          <div id="display">{display}</div>
+          { /* <div id="display" style={{ backgroundColor: 'red' }}>{display}</div> */ }
+          <div id="display" class={hasError ? 'error': ''}>{display}</div>
           {/* buttons mapping from data array */}
           {data.map(d => (
             <Button
