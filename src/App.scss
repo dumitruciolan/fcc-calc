@@ -1,0 +1,149 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+
+* {
+  font-family: "Roboto", sans-serif;
+  font-size: 6vmin;
+}
+
+#container, #display {
+  display: flex;
+  align-items: center;
+}
+
+#container {
+  > span {
+    flex: 1;
+    margin: auto 1.5vmax;
+    
+    > p {
+    font-size: 2.5vmax;
+    }
+  }
+}
+
+#calculator {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  height: 80vh;
+  width: 70vmin;
+  margin: 7vh auto;
+  border: 1vmin ridge;
+  border-radius: 4%;
+  background: whitesmoke;
+}
+
+#calculator, #display{ 
+  padding: 4vmin;
+}
+
+#history {
+  height: 50vmin;
+  border-radius: 1%;
+  border: 1px solid lightgray;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  font-weight: 100;
+  font-size: 2vmax;
+}
+// same size
+#history, .btn {
+    width: 45vmax;
+}
+// ctrl+a selects only display & history
+.button, p {
+  width: 97.5%;
+  height: 97.5%;
+  border-radius: 10%;
+  user-select: none;
+
+  &:active {
+    background: ghostwhite;
+  }
+  // can't select buttons' text
+  &:focus {
+    outline: none;
+  }
+}
+
+#display, #history {
+  background: lightgoldenrodyellow;
+}
+//calculator's display
+#display {
+  border: 0.5vmin inset;
+  justify-content: flex-end;
+  grid-row: 1/2;
+  grid-column: 1/5;
+  overflow: hidden;
+  margin-bottom: 4vmin;
+}
+// operators styling
+#add, #subtract, #multiply, #divide, #clear {
+  font-weight: 900;
+  color: coral;
+}
+// buttons distribution on grid
+#subtract {
+  grid-row: 2/3;
+}
+
+#seven, #eight, #nine {
+  grid-row: 3/4;
+}
+
+#seven, #four, #one {
+  grid-column: 1/2;
+}
+
+#eight, #five, #two { 
+  grid-column: 2/3;
+}
+
+#nine, #six, #three, #decimal {
+  grid-column: 3/4;
+}
+
+#four, #five, #six {
+  grid-row: 4/5;
+}
+
+#one, #two, #three {
+  grid-row: 5/6;  
+}
+
+#zero, #decimal {
+  grid-row: 6/7;
+}
+
+#zero {
+  grid-column: 1/3;
+}
+
+#subtract, #add, #equals {
+  grid-column: 4/5;
+}
+
+#add {
+  grid-row: 3/5;
+}
+
+#equals {
+  grid-row: 5/7;
+  background: coral;
+  color: white;
+}
+// re-adjust layout on portrait mode
+@media only screen and (orientation: portrait) {
+  #container {
+    flex-direction: column;
+  }
+  
+  .btn {
+    margin-bottom: 6vmax;
+  }
+  
+  p {
+    text-align: center;
+  }
+}
