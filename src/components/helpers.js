@@ -21,20 +21,39 @@ export const calculatorButtons = [
 
 const operators = ['+', '-', '/', '*']
 
+const decimalDenied = (lastChar) => {
+  if (lastChar === '.') {
+    return true
+  }
+  return false
+}
+
+export const resetStack = (lastChar, button) => {
+  if (
+    lastChar == parseInt(lastChar) &&
+    operators.indexOf(button) > -1
+  ){
+    // console.log('reset stack');
+    return true
+  }
+
+  return false
+}
+
 export const actionDenied = (display, button) => {
   const lastChar = display.slice(display.length-1)
 
-  console.log('lastChar', lastChar);
-  console.log('button', button);
   // lastChar & button in operators array return true
   if (
     operators.indexOf(lastChar) > -1 &&
     operators.indexOf(button) > -1
   ) return true
 
-  if (display === '0' && operators.indexOf(button) > -1) return true
+  if(display === '0' && operators.indexOf(button) > -1) return true
 
-  if (display === '0' && button === '=') return true
+  if(display === '0' && button === '=') return true
+
+  if(button === '.' && decimalDenied(lastChar)) return true
 
   return false
 }
