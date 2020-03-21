@@ -3,6 +3,7 @@ import { useState } from 'react';
 import logo from './logo.svg';
 // import './App.scss';
 import CalcV1 from './components/CalcV1'
+import CalcV11 from './components/CalcV11'
 
 function App() {
   const [version, setVersion] = useState('v1');
@@ -15,7 +16,7 @@ function App() {
       { version === 'v1' ? (
         <CalcV1 />
       ):(
-        <div>v1.1</div>
+        <CalcV11 />
       ) }
     </div>
   );

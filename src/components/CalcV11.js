@@ -28,7 +28,7 @@ const Button = ({ id, handleClick, value }) => (
   </button>
 );
 // main component
-class CalcV1 extends React.Component {
+class CalcV11 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -142,7 +142,7 @@ class CalcV1 extends React.Component {
   render() {
     return (
       <div id="container">
-        <h3>v1</h3>
+        <h3>v1.1</h3>
         <span>
           <div id="calculator">
             {/* screen display component */}
@@ -174,4 +174,4 @@ class CalcV1 extends React.Component {
   }
 }
 
-export default CalcV1;
+export default CalcV11;
